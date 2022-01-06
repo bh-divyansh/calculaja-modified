@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:function_tree/function_tree.dart';
+// https://pub.dev/packages/function_tree/install
 
 class CalculatorHome extends StatefulWidget {
   const CalculatorHome({Key? key}) : super(key: key);
@@ -8,12 +10,12 @@ class CalculatorHome extends StatefulWidget {
 }
 
 class _CalculatorHomeState extends State<CalculatorHome> {
-  String clickedTexts = '7383.90';
+  String clickedTexts = '0';
 
   void addClickedText(String textToAdd) {
     // TODO Yourself correct adding for example if I press all caluclation
     // keys 6-÷+ it shows all but in real life this is not possible.
-    // So if we have already a caluclation keys then it should be 
+    // So if we have already a caluclation keys then it should be
     // replaced by new one. Exapmle we have 6- if we press ÷ then
     // it will become 6÷ not 6-÷.
     // Add this thing by yourself.
@@ -44,7 +46,18 @@ class _CalculatorHomeState extends State<CalculatorHome> {
     setState(
       () {
         // evalutate on prress.
-        clickedTexts = 'Finding..';
+        if (clickedTexts.contains('%') == false) {
+          final ans = clickedTexts.interpret();
+
+          if (ans.runtimeType == double) {
+            clickedTexts = ans.round().toString();
+          } else {
+            clickedTexts = ans.toString();
+          }
+        } else {
+          // Ye part nhi ho rha
+          print('it has %');
+        }
         // TODO Yourself.
       },
     );
@@ -93,12 +106,15 @@ class _CalculatorHomeState extends State<CalculatorHome> {
                             ),
                           ),
                         ),
-                        const Expanded(
+                        Expanded(
                           child: Center(
-                            child: Text(
-                              '%',
-                              style: TextStyle(
-                                fontSize: 35,
+                            child: InkWell(
+                              onTap: () => addClickedText('%'),
+                              child: const Text(
+                                '%',
+                                style: TextStyle(
+                                  fontSize: 35,
+                                ),
                               ),
                             ),
                           ),

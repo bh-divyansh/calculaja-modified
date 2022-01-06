@@ -8,6 +8,8 @@ dependencies:
   flutter:
     sdk: flutter
   cupertino_icons: ^1.0.2
+  function_tree: ^0.8.12
+function_tree: ^0.8.12 #added from stack overflow
 
 dev_dependencies:
   flutter_test:
